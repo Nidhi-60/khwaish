@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Khwaish | {% block title %}{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+    <!--    Bootstrap links-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!--    font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--    load css-->
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Logo Image -->
+    <div class="container-fluid">
+        <div class="row l-background">
+            <img src="{% static 'logo.png' %}" height="250px" width="600px" class="img-fluid mb-4">
+        </div>
+
+
+
+        <!--   Login / Logout     -->
+
+
+        <div class="row l-background">
+            <div class="nav-font welcome-text mb-2">
+                welcome,
+                {% if user.is_authenticated %}
+                {{ user }} &nbsp;
+                <a href="{% url 'logout' %}" class="btn btn-outline-dark nav-font"><i class="fa fa-user"
+                        aria-hidden="true"></i>&nbsp;Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-info nav-font"><i class="fa fa-user"
+                        aria-hidden="true"></i>&nbsp;Login</a>
+                or
+                <a href="{% url 'signup' %}" class="btn btn-outline-dark nav-font"><i class="fa fa-sign-in"
+                        aria-hidden="true"></i>&nbsp;Sign-up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!--        Navbar-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'logo.png' %}" alt="Logo" style="width:200px">
+        </a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+
+            <!-- Dropdown -->
+
+            {% if artistnavname %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-font text-light" href="#" id="navbardrop" data-toggle="dropdown">
+                    Artist
+                </a>
+                <div class="dropdown-menu">
+                    {% for a in artistnavname %}
+                    <a class="dropdown-item nav-font" href="{% url 'artistpainting' a.id %}">{{ a.artistname }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+
+            {% endif %}
+
+            {% if categoryname %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-font text-light" href="#" id="navbardrop1"
+                    data-toggle="dropdown">
+                    Paintings
+                </a>
+                <div class="dropdown-menu">
+                    {% for c in categoryname %}
+                    <a class="dropdown-item nav-font"
+                        href="{% url 'categorypainting' c.id %}">{{ c.paintingcategoryname }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+                <a class="nav-link nav-font text-light" href="{% url 'blog' %}">Blog</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-font text-light" href="#">Contact Us</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-font text-light" href="{% url 'feedback' %}">Feedback</a>
+            </li>
+        </ul>
+
+
+        <!-- search box -->
+        <div class="search-box">
+            <div class="input-group">
+                <a href="{% url 'cartdetail' %}">
+                    <span class="icon-size">
+                        <i class="fa fa-shopping-cart text-light mr-5" aria-hidden="true">
+                            <span class="badge badge-info badge-position">
+                                {% if cartitem %}
+                                {{ cartitem }}
+                                {% else %}
+                                0
+                                {% endif %}
+                            </span>
+                        </i>
+                    </span>
+                </a>
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-info">
+                        <i class="fa fa-search text-light" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <input type="text" class="form-control nav-font" placeholder="Type something" name="txtsearch"
+                    id="txtsearch">
+            </div>
+        </div>
+        </div>
+    </nav>
+    <div id='result'>
+    </div>
+
+
+
+
+
+
+    <!-- Data content -->
+
+
+    {% block content %}
+
+
+
+
+    {% endblock %}
+
+
+
+
+    <!-- footer -->
+
+    <hr>
+    <div class="container-fluid bg-dark mt-3 footer">
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <p class="text-center text-light nav-font footer-text">&copy; Khwaish Art Gallary - 2020 All Right Reserve </p>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+<script src="{% static 'js/app.js' %}"></script>
+
+</html>

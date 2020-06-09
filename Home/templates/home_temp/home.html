@@ -1,0 +1,120 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+
+{% load static %}
+<!-- slider -->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 mb-2 mt-1">
+            <div id="demo" class="carousel slide slide-size" data-ride="carousel">
+
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'slider/slider1.jpeg' %}" alt="slider 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'slider/slider2.jpeg' %}" alt="slider 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'slider/slider3.jpg' %}" alt="slider 3">
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev text-dark" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next text-dark" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<!--painting detail-->
+
+
+<div class="painting-board nav-font bg-dark text-light">
+  <h4>Paintings</h4>
+</div>
+
+<div class="painting-board nav-font bg-dark text-light mt-4">
+  <h4>Paintings By Artist</h4>
+</div>
+
+<div class="container mt-3">
+    <div class="row">
+          {% if artistdetail %}
+              {% for a in artistdetail %}
+        <div class="col-md-4">
+               <div class="card nav-font">
+                   <div class="card-header bg-dark text-light">
+                       {{ a.artistname }}
+                   </div>
+                   <div class="card-body">
+                       <img src="{{ a.artistimage.url }}" height="300px" width="300px" class="box" style="margin-top:5px;">
+                   </div>
+                   <div class="card-footer bg-dark text-light">
+                       <a href="{% url 'artistpainting' a.id %}" class="btn btn-outline-info nav-font" style="margin-left:30%;">Paintings</a>
+                   </div>
+               </div>
+        </div>
+           {% endfor %}
+            {% endif %}
+    </div>
+</div>
+
+<!-- By Type -->
+
+<div class="painting-board nav-font bg-dark text-light mt-4">
+  <h4>Paintings By Types</h4>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+      {% if categorytype %}
+      {% for c in categorytype %}
+    <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-dark nav-font text-light">
+            {{ c.paintingcategoryname }}
+          </div>
+        <div class="card-body">
+            <img src="{{ c.paintingimage.url }}" height="300px" width="300px" class="box" style="margin-top:5px;">
+        </div>
+         <div class="card-footer bg-dark text-light">
+             <a href="{% url 'categorypainting' c.id %}" class="btn btn-outline-info nav-font" style="margin-left:30%;">Paintings</a>
+         </div>
+      </div>
+    </div>
+      {% endfor %}
+      {% endif %}
+  </div>
+</div>
+
+
+
+{% endblock %}

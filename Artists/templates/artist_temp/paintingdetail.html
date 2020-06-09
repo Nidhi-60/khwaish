@@ -1,0 +1,80 @@
+{% extends 'Base.html' %}
+{% block title %}
+{{ paintings.paintingname }}
+{% endblock %}
+{% block content %}
+
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4 mt-5 mb-5">
+              <img src="{{ paintings.paintingimage.url }}" height="300px" width="300px"class="box" style="margin-top:10px;">
+          </div>
+          <div class="col-md-8">
+             <div>
+                 <h4 style="margin-top:70px;" class="nav-font text-center">{{ paintings.paintingname }}</h4>
+                 <hr>
+
+                 <h3 class="nav-font">Painting Type : {{ paintings.paintingtype }}</h3>
+                 <h3 class="nav-font">Painting Size : {{ paintings.paintingsize }}</h3>
+                 <h3 class="nav-font">Painting Size : {{ paintings.paintingprice }} &#8377;</h3>
+                 <a href="{% url 'cart' paintings.id paintings.paintingcode %}" class="btn btn-outline-info mt-3 nav-font">
+                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                     &nbsp;Add to Cart
+                 </a>
+                 <a href="{% url 'buynow' paintings.id paintings.paintingcode %}" class="btn btn-outline-dark mt-3 nav-font">
+                     <i class="fa fa-credit-card" aria-hidden="true"></i>
+                     &nbsp;Buy Now
+                 </a>
+             </div>
+          </div>
+      </div>
+  </div>
+
+<hr>
+
+<!--Review Form-->
+<div class="container">
+    <div class="row">
+          <div>
+          <h4 class="nav-font">Add Your Review here</h4>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="box" style="margin-top:10px;">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="add" class="btn btn-outline-dark">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% if review %}
+    <div class="row mt-3">
+        <h5 class="nav-font">Other's review</h5>
+    </div>
+    {% if review %}
+            {% for i in review %}
+    <div class="row mt-2 box">
+        <div>
+           <h6 class="nav-font">{{ i.review }}</h6>
+            <small>{{ i.created_date }}</small>&nbsp;
+            <small><i class="fa fa-user-o" aria-hidden="true"></i>{{ i.user }}</small>
+            {% if i.user == user %}
+            <a href="{% url 'removereview' i.id paintings.id %}" style="margin-left:70px;" class="btn btn-outline-danger">remove</a>
+            {% endif %}
+         </div>
+    </div>
+     {% endfor %}
+        {% endif %}
+    {% else %}
+       <div class="row mt-3">
+           <h5 class="nav-font">Be the first Write Your Review..</h5>
+       </div>
+    {% endif %}
+</div>
+
+{% endblock %}

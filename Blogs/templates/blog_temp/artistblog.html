@@ -1,0 +1,24 @@
+{% extends 'Base.html' %}
+{% block title %}
+  Blog
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        {% if artist %}
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{{ artist.artist.artistimage.url }}" height="200px" width="200px" class="ml-3 box">
+            </div>
+            <div class="col-md-3 mt-5 nav-font">
+                <h4>{{ artist.artist.artistname }}</h4>
+                <h6>BirthDate : {{ artist.dob }}</h6>
+                <h6>Paintings :{{ artist.painting }}</h6>
+                <h6>Place : {{ artist.address }}</h6>
+                <h6>Awards: {{ artist.awards }}</h6>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

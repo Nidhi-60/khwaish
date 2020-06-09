@@ -1,0 +1,93 @@
+{% extends 'Base.html' %}
+{% block title %}
+   Cart
+{% endblock %}
+{% block content %}
+
+ <div class="container">
+      <div class="row">
+          <div class="col-md-8"></div>
+          <div class="col-md-4 box" style="margin-top:5px;">
+               {% if userdata %}
+                  <h5 class="nav-font text-center">{{ userdata.user }}'s Data</h5>
+                    <hr>
+                  <h5 class="nav-font">Address : {{ userdata.address }}</h5>
+                  <h5 class="nav-font">Pincode : {{ userdata.pincode }}</h5>
+                  <h5 class="nav-font">city : {{ userdata.city }}</h5>
+                  <h5 class="nav-font">state : {{ userdata.state }}</h5>
+                  <a href="{% url 'user' %}" class="btn btn-outline-danger" style="margin-left:30%;"> Edit  </a>
+               {% endif %}
+          </div>
+      </div>
+   </div>
+
+
+{% if error %}
+  <div class="container" style="margin-top:100px;margin-bottom:200px;">
+
+    <div class="row box" style="padding:100px;">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 nav-font">
+            <h5>{{ error }}</h5>
+        </div>
+    </div>
+
+  </div>
+
+  {% else %}
+
+    <div class="container">
+       {% for i in product %}
+         {% if i.artistproduct is not None %}
+       <div class="row">
+           <div class="col-md-3">
+           </div>
+           <div class="col-md-3 box">
+               <img src="{{ i.artistproduct.paintingimage.url }}" height="150px" width="150px" class="box" style="margin-top:10px;">
+           </div>
+           <div class="col-md-3 box">
+               <a href="{% url 'paintingdetail' i.artistproduct.id  %}"><h3 class="nav-font">{{ i.artistproduct.paintingname }}</h3></a>
+               <h3 class="nav-font">Price : {{ i.artistproduct.paintingprice }}</h3>
+               <a href="{% url 'remove' i.artistproduct.id i.artistproduct.paintingcode %}" class="btn btn-outline-danger nav-font">Remove</a>
+               <a href="{% url 'buynowcart' i.artistproduct.id i.artistproduct.paintingcode %}" class="btn btn-outline-info nav-font">Buy</a>
+           </div>
+       </div>
+        {% else %}
+          <div class="row">
+           <div class="col-md-3"></div>
+           <div class="col-md-3 box">
+               <img src="{{ i.categoryproduct.paintingimage.url }}" height="150px" width="150px" class="box" style="margin-top:10px;">
+           </div>
+           <div class="col-md-3 box">
+               <a href="{% url 'categorypaintingdetail' i.categoryproduct.id %}"><h3 class="nav-font">{{ i.categoryproduct.paintingname }}</h3></a>
+               <h3 class="nav-font">Price : {{ i.categoryproduct.paintingprice }}</h3>
+               <a href="{% url 'remove' i.categoryproduct.id i.categoryproduct.paintingcode %}" class="btn btn-outline-danger nav-font">Remove</a>
+               <a href="{% url 'buynowcart' i.categoryproduct.id i.categoryproduct.paintingcode %}" class="btn btn-outline-info nav-font">Buy</a>
+           </div>
+       </div>
+        {% endif %}
+       {% endfor %}
+       <div class="row" style="margin-top:-30px;">
+           <div class="col-md-3"></div>
+           <div class="col-md-3"></div>
+           <div class="col-md-3 box">
+              {% for c,v in count.items %}
+                  <div>
+                     <h5 class="nav-font" style="display:inline;padding:5px;margin-left">{{ c }} :
+                     </h5>
+                      <div style="height:30xp;width:30px;display:inline;">
+                    <span class="nav-font"> {{ v }}</span>
+               </div>
+                  </div>
+               {% endfor %}
+               <div>
+                   <a href="{% url 'buy' user.id %}" class="btn btn-outline-dark" style="margin-left:30%;">Buy <span class="badge badge-danger">{{ cartitem }} </span></a>
+               </div>
+           </div>
+       </div>
+   </div>
+
+{% endif %}
+{% endblock %}
+
+

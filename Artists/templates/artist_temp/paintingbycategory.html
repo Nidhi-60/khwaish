@@ -1,0 +1,33 @@
+{% extends 'Base.html' %}
+{% block title %}
+   {{ categorynames.paintingcategoryname }} | painting
+{% endblock %}
+{% block content %}
+
+
+    <div class="painting-board nav-font bg-dark text-light mt-5" style="width:400px;">
+        <h4>{{ categorynames.paintingcategoryname  }} </h4>
+    </div>
+
+    <div class="container mt-3">
+    <div class="row">
+          {% if paintingsbycategory %}
+              {% for c in paintingsbycategory %}
+        <div class="col-md-4 mb-4">
+               <div class="card nav-font">
+                   <div class="card-header bg-dark text-light">
+                       {{ c.paintingname }}
+                   </div>
+                   <div class="card-body">
+                       <img src="{{ c.paintingimage.url }}" height="300px" width="300px" class="box" style="margin-top:5px;">
+                   </div>
+                   <div class="card-footer bg-dark text-light">
+                       <a href="{% url 'categorypaintingdetail' c.id %}" class="btn btn-outline-info nav-font" style="margin-left:30%;">Detail</a>
+                   </div>
+               </div>
+        </div>
+           {% endfor %}
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

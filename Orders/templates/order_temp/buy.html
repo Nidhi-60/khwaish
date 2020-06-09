@@ -1,0 +1,51 @@
+{% extends 'Base.html' %}
+{% block title %}
+   Order
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+       {% if userbuydata %}
+       {% for i in userbuydata %}
+         {% if i.artistproduct is not None %}
+       <div class="row">
+           <div class="col-md-3">
+           </div>
+           <div class="col-md-3 box">
+               <img src="{{ i.artistproduct.paintingimage.url }}" height="150px" width="150px" class="box" style="margin-top:10px;">
+           </div>
+           <div class="col-md-3 box">
+               <h3 class="nav-font">{{ i.artistproduct.paintingname }}</h3>
+               <h3 class="nav-font">Price : {{ i.artistproduct.paintingprice }}</h3>
+           </div>
+       </div>
+        {% else %}
+          <div class="row">
+           <div class="col-md-3"></div>
+           <div class="col-md-3 box">
+               <img src="{{ i.categoryproduct.paintingimage.url }}" height="150px" width="150px" class="box" style="margin-top:10px;">
+           </div>
+           <div class="col-md-3 box">
+               <h3 class="nav-font">{{ i.categoryproduct.paintingname }}</h3>
+               <h3 class="nav-font">Price : {{ i.categoryproduct.paintingprice }}</h3>
+           </div>
+       </div>
+        {% endif %}
+       {% endfor %}
+       <div class="row" style="margin-top:-30px;">
+          <div class="col-md-3"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3 box">
+             <a href="{% url 'success' %}" class="btn btn-outline-dark">
+                Proceed To Pay
+                {% if finalprice %}
+                   {{ finalprice }}
+                {% endif %}
+             </a>
+          </div>
+       </div>
+       {% endif %}
+   </div>
+{% endblock %}
+
+

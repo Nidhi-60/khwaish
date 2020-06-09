@@ -1,0 +1,79 @@
+{% extends 'Base.html' %}
+{% block title %}
+User Detail
+{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box">
+
+                <img src="{% static 'favicon.jpg' %}" class="form-icon">
+
+                <h3 class="text-center nav-font">User Detail</h3>
+                <hr>
+
+                 {% if error %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                 {% endif %}
+                 {% if userdata %}
+                <form method="post" action="{% url 'user' %}" class="form-group">
+                    {% csrf_token %}
+                     <div class="mb-3">
+                        <label class="nav-font">Address : </label>
+                         <textarea name="txtaddress" placeholder="address" class="nav-font form-input">{{ userdata.address }}</textarea>
+<!--                        <input type="text" name="txtaddress" placeholder="address" class="nav-font form-input">-->
+                    </div>
+                     <div class="mb-3">
+                        <label class="nav-font">Pincode : </label>
+                        <input type="text" name="txtpincode" placeholder="pincode" class="nav-font form-input" value="{{ userdata.pincode }}">
+                    </div>
+                     <div class="mb-3">
+                        <label class="nav-font">City : </label>
+                        <input type="text" name="txtcity" placeholder="city" class="nav-font form-input" value="{{ userdata.city }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="nav-font">State : </label>
+                        <input type="text" name="txtstate" placeholder="state" class="nav-font form-input" value="{{ userdata.state }}">
+                    </div>
+                    <div class="mb-3" style="margin-left:33%;">
+                        <input type="submit" class="btn btn-outline-info nav-font" value="Save date">
+                    </div>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'user' %}" class="form-group">
+                    {% csrf_token %}
+                     <div class="mb-3">
+                        <label class="nav-font">Address : </label>
+                         <textarea name="txtaddress" placeholder="address" class="nav-font form-input"></textarea>
+<!--                        <input type="text" name="txtaddress" placeholder="address" class="nav-font form-input">-->
+                    </div>
+                     <div class="mb-3">
+                        <label class="nav-font">Pincode : </label>
+                        <input type="text" name="txtpincode" placeholder="pincode" class="nav-font form-input">
+                    </div>
+                     <div class="mb-3">
+                        <label class="nav-font">City : </label>
+                        <input type="text" name="txtcity" placeholder="city" class="nav-font form-input">
+                    </div>
+                    <div class="mb-3">
+                        <label class="nav-font">State : </label>
+                        <input type="text" name="txtstate" placeholder="state" class="nav-font form-input">
+                    </div>
+                    <div class="mb-3" style="margin-left:33%;">
+                        <input type="submit" class="btn btn-outline-info nav-font" value="Save date">
+                    </div>
+                </form>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+{% endblock %}

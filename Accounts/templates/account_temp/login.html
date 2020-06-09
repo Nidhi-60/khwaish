@@ -1,0 +1,49 @@
+{% extends 'Base.html' %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box">
+
+                <img src="{% static 'favicon.jpg' %}" class="form-icon">
+
+                <h3 class="text-center nav-font">Login</h3>
+                <hr>
+
+                 {% if error %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                 {% endif %}
+
+                <form method="post" action="{% url 'login' %}" class="form-group">
+                    {% csrf_token %}
+                     {% if request.GET.next %}
+                       <input type="hidden" value="{{ request.GET.next }}" name="txtnextpage">
+                     {% endif %}
+                     <div class="mb-3">
+                        <label class="nav-font">Enter user Name : </label>
+                        <input type="text" name="txtusername" placeholder="username" class="nav-font form-input">
+                    </div>
+                     <div class="mb-3">
+                        <label class="nav-font">Enter password : </label>
+                        <input type="text" name="txtpassword" placeholder="password" class="nav-font form-input">
+                    </div>
+                    <div class="mb-3" style="margin-left:33%;">
+                        <input type="submit" class="btn btn-outline-info nav-font" value="Login">
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+
+
+{% endblock %}
