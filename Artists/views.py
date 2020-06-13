@@ -3,6 +3,7 @@ from . import models
 from django.apps import apps
 from .Reviewform import Review
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -24,12 +25,19 @@ def paintingbyartist(request, artistid):
     categoryname = models.Paintingcategory.objects.all()
     paintings = models.Artistpainting.objects.filter(artist=artistid)
     artistdetail = models.Artist.objects.get(id=artistid)
+    p = Paginator(paintings, 3)
+    page_number = request.GET.get('page')
+    if page_number:
+        current_page = p.get_page(page_number)
+    else:
+        current_page = p.get_page(1)
     context = {
         'painting': paintings,
         'artistnavname': artistnavname,
         'artistdetail': artistdetail,
         'categoryname': categoryname,
-        'cartitem': len(cart)
+        'cartitem': len(cart),
+        'a_page': current_page
     }
     template = 'artist_temp/paintingbyartist.html'
 
@@ -72,12 +80,19 @@ def paintingbycategory(request, categoryid):
     categorynames = models.Paintingcategory.objects.get(id=categoryid)
     paintingsbycategory = models.Paintingofcategory.objects.filter(categoryid=categoryid)
     print(categoryid)
+    p = Paginator(paintingsbycategory, 3)
+    page_number = request.GET.get('page')
+    if page_number:
+        current_page = p.get_page(page_number)
+    else:
+        current_page = p.get_page(1)
     context = {
         'artistnavname': artistnavname,
         'categoryname': categoryname,
         'paintingsbycategory': paintingsbycategory,
         'categorynames': categorynames,
-        'cartitem': len(cart)
+        'cartitem': len(cart),
+        'a_page': current_page
     }
 
     template = 'artist_temp/paintingbycategory.html'

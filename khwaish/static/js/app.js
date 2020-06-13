@@ -22,7 +22,8 @@ function search() {
         window.location = '';
     }
     else {
-        fetchdata(`search/${val}`)
+//        fetchdata(`search/${val}`)
+          fetchdata(`http://127.0.0.1:8000/search/${val}/`)
             .then(function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
@@ -32,12 +33,12 @@ function search() {
                     var a = document.createElement('a');
 
 
-                    a.href = `artist/painting/${data[i]['pk']}`;
+                    a.href = `http://127.0.0.1:8000/artist/painting/${data[i]['pk']}`;
                     a.text = data[i]['fields']['paintingname'];
 
                     imgdiv.text = data[i]['fields']['paintingimage'];
 
-                    img.src = `Media/${data[i]['fields']['paintingimage']}`;
+                    img.src = `http://127.0.0.1:8000/Media/${data[i]['fields']['paintingimage']}`;
                     img.style.height = '50px';
                     img.style.width = '50px';
 
@@ -47,7 +48,7 @@ function search() {
                     li.appendChild(img);
                     li.appendChild(a);
 
-                    console.log(imgdiv);
+
                     ul.appendChild(li);
                     div.appendChild(ul);
 

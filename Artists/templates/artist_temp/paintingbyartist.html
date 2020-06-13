@@ -5,14 +5,40 @@
 {% block content %}
 
 
-    <div class="painting-board nav-font bg-dark text-light mt-5" style="width:400px;">
+<!--    <div class="painting-board nav-font bg-dark text-light mt-5" style="width:400px;">-->
+<!--        <abbr title="{{ artistdetail.artistname }}'s blog"><a href="{% url 'artistblog' artistdetail.id %}" class="text-light"><h4>{{ artistdetail.artistname }}'s Paintings</h4></a></abbr>-->
+<!--    </div>-->
+
+<!--    <div class="container mt-3">-->
+<!--    <div class="row">-->
+<!--          {% if painting %}-->
+<!--              {% for p in painting %}-->
+<!--        <div class="col-md-4 mb-4">-->
+<!--               <div class="card nav-font">-->
+<!--                   <div class="card-header bg-dark text-light">-->
+<!--                       {{ p.paintingname }}-->
+<!--                   </div>-->
+<!--                   <div class="card-body">-->
+<!--                       <img src="{{ p.paintingimage.url }}" height="300px" width="300px" class="box" style="margin-top:5px;">-->
+<!--                   </div>-->
+<!--                   <div class="card-footer bg-dark text-light">-->
+<!--                       <a href="{% url 'paintingdetail' p.id %}" class="btn btn-outline-info nav-font" style="margin-left:30%;">Detail</a>-->
+<!--                   </div>-->
+<!--               </div>-->
+<!--        </div>-->
+<!--           {% endfor %}-->
+<!--            {% endif %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="painting-board nav-font bg-dark text-light mt-5" style="width:400px;">
         <abbr title="{{ artistdetail.artistname }}'s blog"><a href="{% url 'artistblog' artistdetail.id %}" class="text-light"><h4>{{ artistdetail.artistname }}'s Paintings</h4></a></abbr>
-    </div>
+</div>
 
     <div class="container mt-3">
     <div class="row">
-          {% if painting %}
-              {% for p in painting %}
+          {% if a_page %}
+              {% for p in a_page %}
         <div class="col-md-4 mb-4">
                <div class="card nav-font">
                    <div class="card-header bg-dark text-light">
@@ -31,7 +57,25 @@
     </div>
 </div>
 
+<div class="container">
+    <div class="pagination">
+    <span class="step-links">
+        {% if a_page.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ a_page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ a_page.number }} of {{ a_page.paginator.num_pages }}.
+        </span>
+
+        {% if a_page.has_next %}
+            <a href="?page={{ a_page.next_page_number }}">next</a>
+            <a href="?page={{ a_page.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 
 
-
+</div>
+</div>
 {% endblock %}

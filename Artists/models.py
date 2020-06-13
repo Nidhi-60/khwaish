@@ -9,9 +9,6 @@ class Artist(models.Model):
     artistimage = models.ImageField(default='errorimage/noimage.png', upload_to='Image/')
     specialist = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.artistname
-
 
 # painting of artist
 class Artistpainting(models.Model):
@@ -38,3 +35,4 @@ class Paintingofcategory(models.Model):
     paintingsize = models.CharField(max_length=50)
     paintingprice = models.IntegerField(default=0)
     paintingcode = models.CharField(max_length=2, default='C')
+
